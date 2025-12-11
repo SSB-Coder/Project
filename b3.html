@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="text-align: center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-style: oblique; margin: 15px auto;width: 400px; padding: 15px; border: 25px solid purple; border-radius: 25px; box-shadow: 10px 20px 10px gray; background-image: url('download\ \(1\).jpeg'); background-repeat: no-repeat; background-size: cover;" >
+    <h2 style="color: blueviolet;">Hotel Billing system</h2>
+    <label style="color: purple; margin: 125px auto; width: 50px; padding: 3px; border: 10px solid lightblue; box-shadow: 5px 5px 10px blue; background-color: azure; line-height: 3; border-radius: 10px" >Room type:
+        <select name="" id="roomType">
+            <option value="single">Single: Rs 1000 / night </option>
+            <option value="double">Double: Rs 2500 / night </option>
+            <option value="suite">Suite: Rs 4000 / night </option>
+        </select>
+    </label>
+    <br><br>
+    <label style="color: purple; margin: 125px auto; width: 50px; padding: 3px; border: 10px solid lightblue; box-shadow: 5px 5px 10px blue; background-color: azure; line-height: 3; border-radius: 10px" for="">Number of nights:<input id="nights" type="number" value="1" min="1"></label>
+    <br><br>
+    <label style="color: purple; margin: 125px auto; width: 50px; padding: 3px; border: 10px solid lightblue; box-shadow: 5px 5px 10px blue; background-color: azure; line-height: 3; border-radius: 10px;" for=""><input type="checkbox" id="breakfast">Breakfast (Rs 200 / day) </label><br><br>
+    <label style="color: purple; margin: 125px auto; width: 50px; padding: 3px; border: 10px solid lightblue; box-shadow: 5px 5px 10px blue; background-color: azure; line-height: 3; border-radius: 10px" for=""><input type ="checkbox" id="airport">Airport Pickup(one-time Rs 800)</label><br><br>
+    <label style="color: purple; margin: 125px auto; width: 50px; padding: 3px; border: 10px solid lightblue; box-shadow: 5px 5px 10px blue; background-color: azure; line-height: 2; border-radius: 10px" for=""><input type="checkbox" id="laundary">Laundary (Rs 150 / laod)</label><br><br>
+    <button style="color: purple; margin: 10px auto; width: 100px; padding: 5px; border: 10px solid lightblue; box-shadow: 5px 5px 10px blue; background-color: azure; border-radius: 10px"id="calculate">Calculate Bill</button>
+    <h3 style="color: red;">Invoice</h3>
+    <pre style="color: black; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-style: oblique; margin: 15px auto;width: 165px; padding: 15px; border: 2px solid cyan; border-radius: 25px; box-shadow: 10px 20px 10px gray; background-color: antiquewhite;  " id="Invoice"></pre>
+    <script>
+
+        const roomType=document.getElementById("roomType");
+        const nights=document.getElementById("nights");
+        const breakfast=document.getElementById("breakfast");
+        const airport=document.getElementById("airport");
+        const laundary=document.getElementById("laundary");
+        const Invoice=document.getElementById("Invoice");
+        const calculate=document.getElementById("calculate");
+
+        const roomPrices={
+            single:1000,
+            double:2500,
+            suite:4000
+
+        };
+        calculate.addEventListener('click',(()=>{
+            const n=Number(nights.value);
+            if(Number.isNaN(n)||n<1){
+                Invoice.textContent='enter valid number of nights(>=1).';
+                return;
+
+            }
+            const selectRoom=roomType.value;
+            const roomRate=roomPrices[selectRoom];
+            const roomCost=roomRate*n;
+            const breakfastCost=breakfast.checked ? 200*n:0;
+            const laundaryCost=laundary.checked ? 150*n : 0;
+            const airportCost=airport.checked ? 800 :0;
+            const totalCost=roomCost+breakfastCost+laundaryCost+airportCost;
+            let invoiceText='Hotel Invoice\n';
+            invoiceText+='-----------------------\n';
+            invoiceText+=`Room Type: ${selectRoom}\n`;
+            invoiceText+=`Number of nights: ${n} \n`;
+            invoiceText+=`Room Cost: Rs ${roomCost}\n`;
+            invoiceText+=`Breakfast Cost: Rs ${breakfastCost}\n`;
+            invoiceText+=`Laundary Cost: Rs ${laundaryCost}\n`;
+            invoiceText+=`Airport Pickup Cost: Rs ${airportCost}\n`;
+            invoiceText+='-----------------------\n';
+            invoiceText+=`Total Cost: Rs ${totalCost}\n`;
+            Invoice.textContent=invoiceText;
+        }));
+
+    </script>
+</body>
+</html>
